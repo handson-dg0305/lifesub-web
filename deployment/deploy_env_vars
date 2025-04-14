@@ -1,0 +1,18 @@
+# Team Settings
+teamid=dg0305
+root_project=lifesub-web
+namespace=dg0305-lifesub-ns
+
+# Container Registry Settings
+registry=acrdigitalgarage01.azurecr.io
+image_org=dg0305
+
+# Application Settings
+replicas=1
+export_port=18080
+
+# Resource Settings
+resources_requests_cpu=256m
+resources_requests_memory=256Mi
+resources_limits_cpu=1024m
+resources_limits_memory=1024Mi
