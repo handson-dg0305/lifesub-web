@@ -6,6 +6,8 @@ def getImageTag() {
     return dateFormat.format(currentDate)
 }
 
+
+// jenkins agent pod에 생성할 container 
 podTemplate(
     label: "${PIPELINE_ID}",
     serviceAccount: 'jenkins',
@@ -24,11 +26,11 @@ podTemplate(
     node(PIPELINE_ID) {
         def props
         def imageTag = getImageTag()
-        def manifest = "deploy.yaml"
+        def manifest = "deploy.yaml" //실행 yaml 파일의 이름 
         def namespace
         def sonarScannerHome = '/opt/sonar-scanner'
 
-        stage("Get Source") {
+        stage("Get Source") { 
             checkout scm
             props = readProperties file: "deployment/deploy_env_vars"
             namespace = "${props.namespace}"
