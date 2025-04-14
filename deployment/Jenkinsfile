@@ -31,7 +31,7 @@ podTemplate(
         def sonarScannerHome = '/opt/sonar-scanner'
 
         stage("Get Source") { 
-            checkout scm
+            checkout scm //git clone
             props = readProperties file: "deployment/deploy_env_vars"
             namespace = "${props.namespace}"
         }
@@ -39,7 +39,7 @@ podTemplate(
         stage('Code Analysis & Quality Gate') {
             container('node') {
                 sh "npm install"
-                sh "npm test -- --coverage --passWithNoTests"
+                sh "npm test -- --coverage --passWithNoTests" //test code 가 없어도 실행 
             }
             
             container('sonar-scanner') {
@@ -57,7 +57,7 @@ podTemplate(
             }
             
             timeout(time: 10, unit: 'MINUTES') {
-                def qg = waitForQualityGate()
+                def qg = waitForQualityGate() //sonarqube 응답 기다림
                 if (qg.status != 'OK') {
                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
                 }
